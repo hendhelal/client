@@ -1,0 +1,16 @@
+.Backdrop{
+    top: 0;
+    left: 0;
+    background-color: rgba(11, 11, 11, 0.26);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 450;
+   
+}
+.Show{
+    display: flex;
+}
+.Hide{
+    display: none;
+}

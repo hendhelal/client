@@ -1,0 +1,14 @@
+.Auction{
+
+}
+.Auction .searchContainer{
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 50%;
+    margin: auto;
+    margin-top: 47px;
+    background: white;
+    display: flex;
+    justify-content: space-evenly;
+}
