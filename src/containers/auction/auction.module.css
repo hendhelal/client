@@ -5,10 +5,16 @@
     padding: 10px;
     border: 1px solid gray;
     border-radius: 5px;
-    width: 50%;
+    width: 60%;
     margin: auto;
     margin-top: 47px;
     background: white;
     display: flex;
     justify-content: space-evenly;
+    box-shadow: 3px 1px 13px 2px #dddbd6;
 }
+.Auction .searchContainer input ,.Auction .searchContainer select{
+    width: 33%;
+    margin-right: 20px;
+    margin-left: 20px;
+} 

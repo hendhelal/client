@@ -1,10 +1,10 @@
 .Item{
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    width: 33%;
+    width: 40%;
     margin:20px;
     align-items: center;
-    border: 1px solid #67729c;
+    border: 1px solid #40a4c8;
     border-radius: 5px;
     background: white;
     padding: 15px;

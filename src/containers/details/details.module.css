@@ -1,0 +1,23 @@
+.details{
+    display: flex;
+   
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    padding: 50px;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 20px;
+}
+.left img{
+width: 600px;
+}
+.right{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-evenly;
+}

@@ -6,7 +6,8 @@ function AuctionItem(props) {
         <img src={`/imgs/${item.image}`} />
         <span>{item.name}</span>
         <span>{item.description}</span>
-        <Link to={`details/${item.id}`}>Bid Now</Link>
+        <span>{item.price} $</span>
+        <Link to={`items/${item.id}`}>Bid Now</Link>
     </li>)
 }
 export default AuctionItem;
