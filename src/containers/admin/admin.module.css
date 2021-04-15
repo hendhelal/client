@@ -1,0 +1,7 @@
+.itemsList{
+    list-style: none;
+}
+.listItem{
+    display: flex;
+    justify-content: space-evenly;
+}

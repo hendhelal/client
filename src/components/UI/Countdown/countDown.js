@@ -34,14 +34,14 @@ function CountDown(props) {
         }
 
         timerComponents.push(
-            <span>
+            <span className="font-weight-bold" key={interval}>
                 {timeLeft[interval]} {interval}{" "}
             </span>
         );
     });
     return (
         <div>
-            {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+            {timerComponents.length ? timerComponents : <span className="font-weight-bold">Time's up!</span>}
         </div>
     );
 }

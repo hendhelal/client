@@ -1,0 +1,9 @@
+table{
+    margin:auto;
+    width: 80% !important;
+}
+th ,td{
+    padding: 10px 20px;
+    text-align: left;
+    vertical-align: middle !important;
+}

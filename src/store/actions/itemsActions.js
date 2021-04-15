@@ -33,6 +33,7 @@ export const AuctionInit = () => {
     }
 }
 
+
 const GetItem_Success = (item) => {
     return {
         type: actionTypes.GET_ITEM_SUCCESS,
@@ -62,5 +63,101 @@ export const clearItemFromState = () => {
         item: null
     }
 }
+const AddItem_Success = (item) => {
+    return {
+        type: actionTypes.ADD_ITEM_SUCCESS,
+        item: item,
+    }
+}
 
+const AddItem_Failed = (error) => {
+    return {
+        type: actionTypes.ADD_ITEM_FAILED,
+        error: error
+    }
+}
+export const AddItem = (item) => {
+    return dispatch => {
+        axios.post(`items.json`,item).then(resp => {
+            dispatch(AddItem_Success({id:resp.data.name, ...item}));
+        }).catch(error => {
+            dispatch(AddItem_Failed(error));
+
+        })
+    }
+}
+
+const EditItem_Success = (item) => {
+    return {
+        type: actionTypes.EDIT_ITEM_SUCCESS,
+        item: item,
+    }
+}
+
+const EditItem_Failed = (error) => {
+    return {
+        type: actionTypes.EDIT_ITEM_FAILED,
+        error: error
+    }
+}
+export const EditItem = (id,item) => {
+    return dispatch => {
+        axios.put(`items/${id}.json`,item).then(resp => {
+            dispatch(EditItem_Success(item));
+        }).catch(error => {
+            dispatch(EditItem_Failed(error));
+
+        })
+    }
+}
+
+const DeleteItem_Success = (id) => {
+    return {
+        type: actionTypes.DELETE_ITEM_SUCCESS,
+        id: id,
+    }
+}
+
+const DeleteItem_Failed = (error) => {
+    return {
+        type: actionTypes.DELETE_ITEM_FAILED,
+        error: error
+    }
+}
+export const DeleteItem = (id) => {
+    return dispatch => {
+        axios.delete(`items/${id}.json`).then(resp => {
+            dispatch(DeleteItem_Success(id));
+        }).catch(error => {
+            dispatch(DeleteItem_Failed(error));
+
+        })
+    }
+}
+const AddBidSuccess=(item)=>{
+
+    return{
+        type:actionTypes.ADD_BID_SUCCESS,
+        item:item
+    }
+ }
+ const AddBidFailed=(error)=>{
+
+    return{
+        type:actionTypes.ADD_BID_FAILED,
+        error:error
+    }
+ }
+export const AddBid=(item,id)=>{
+
+    return dispatch=>{
+        axios.put(`items/${id}.json`,item).then(resp=>{
+            dispatch(AddBidSuccess(item));
+        }).catch(error=>{
+            dispatch(AddBidFailed(error));
+           
+        })
+    }
+    
+}
 

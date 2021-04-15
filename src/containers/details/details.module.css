@@ -21,3 +21,30 @@ width: 600px;
     height: 50%;
     justify-content: space-evenly;
 }
+.details form{
+    padding: 20px;
+    border: 1px solid #80808073;
+    margin-top: 40px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 12px 0px #b8b7b7;
+}
+.details form button{
+    background-color: #40a4c8;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.details form p{
+    margin: 0;
+    font-size: small;
+}
+.details form .bidsStats{
+    margin-bottom: 20px;
+
+}
+.details form .bidsStats span:last-child{
+    margin-left: 20px;
+    color: #40a4c8;
+}

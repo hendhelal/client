@@ -78,7 +78,7 @@ class Auction extends Component {
     }
 }
 const mapStateToProps=state=>{
-    console.log(state);
+    
     return{
         items:state.items.items,
         error:state.items.error,

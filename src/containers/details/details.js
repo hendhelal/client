@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import axios from "../../auction-axios";
 import withErrorHandler from "../withErrorHandler";
@@ -8,8 +8,28 @@ import classes from './details.module.css';
 import CountDown from "../../components/UI/Countdown/countDown";
 class Details extends Component {
 
+    state={
+        startBid:0
+    }
+    handleFormSubmit=(e)=>{
+        e.preventDefault();
+        const newItem={...this.props.item};
+        let bids;
+        if(!newItem.bids)
+        {
+            bids=[]
+        }
+        else{
+            bids=[...newItem.bids];
+        }
+   
+        bids.push(this.state.startBid);
+        newItem.bids=bids;
+        this.props.addBid(newItem,this.props.match.params.id);
+    }
     componentDidMount() {
         this.props.getItem(this.props.match.params.id);
+        
     }
 
     render() {
@@ -17,23 +37,43 @@ class Details extends Component {
             return <Spinner />
         }
         else {
+            let spans;
+            let item=this.props.item;
+            if(item.bids)
+            {
+                spans=(<div className={classes.bidsStats}>
+                    <span>Current Bid: </span><span className="font-weight-bold">{item.bids.slice(-1)}$</span>
+                   <span  className="font-weight-bold">[{item.bids.length} bids]</span>
+                </div>)
+               
+            }
+            else{
+                spans=(<div className={classes.bidsStats}>
+                    <span>Starting Bid: </span><span className="font-weight-bold">{item.price}$</span>
+                 <span  className="font-weight-bold">[0 bids]</span>
+                </div>)
+            }
             return (
                 <div className={classes.details}>
                     <div className={classes.left}>
-                        <img src={`/imgs/${this.props.item.image}`} />
+                        <img src={`/imgs/${item.image}`} />
                     </div>
                     <div className={classes.right}>
-                        <h1>{this.props.item.name}</h1>
+                        <h1>{item.name}</h1>
                         <div>
-                            <h3>Item Description:</h3>
+                            <span>Item Description:</span>
                             <h4>
-                                {this.props.item.description}
+                                {item.description}
                             </h4>
                             </div>
-                        <h3>Price:{this.props.item.price}$</h3>
-                        <span>{this.props.item.endDate}</span>
-                        <h3>Time Left:</h3>
-                        <CountDown endDate={this.props.item.endDate}/>
+                         <span>Time Left:</span>
+                        <CountDown endDate={item.endDate}/>
+                        <form onSubmit={this.handleFormSubmit}>
+                         {spans}
+                        <input className="form-control" type="number"  placeholder={item.bids? +item.bids.slice(-1) +1 : item.price} min={item.bids? +item.bids.slice(-1) +1 : item.price } value={this.state.startBid} onChange={(e)=>this.setState({startBid:e.target.value})}/>
+                        <button className="btn" >Submit Bid</button>
+                       <p> Enter bid of {item.bids ?+item.bids.slice(-1)+1: item.price+1 } $ or highter</p>
+                        </form>
                     </div>
                 </div>
             )
@@ -45,7 +85,7 @@ class Details extends Component {
     }
 }
 const mapStateToProps = state => {
-    console.log(state);
+    
     return {
         item: state.items.item,
         error: state.items.error,
@@ -54,7 +94,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getItem: (id) => dispatch(actions.GetItem(id)),
-        clearItem:()=>dispatch(actions.clearItemFromState())
+        clearItem:()=>dispatch(actions.clearItemFromState()),
+        addBid:(item,id)=>dispatch(actions.AddBid(item,id))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Details, axios));
