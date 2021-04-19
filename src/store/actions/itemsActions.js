@@ -87,10 +87,11 @@ export const AddItem = (item) => {
     }
 }
 
-const EditItem_Success = (item) => {
+const EditItem_Success = (item,id) => {
     return {
         type: actionTypes.EDIT_ITEM_SUCCESS,
         item: item,
+        id:id
     }
 }
 
@@ -102,8 +103,9 @@ const EditItem_Failed = (error) => {
 }
 export const EditItem = (id,item) => {
     return dispatch => {
-        axios.put(`items/${id}.json`,item).then(resp => {
-            dispatch(EditItem_Success(item));
+        axios.patch(`items/${id}.json`,item).then(resp => {
+            item={...item,id:id};
+            dispatch(EditItem_Success(item,id));
         }).catch(error => {
             dispatch(EditItem_Failed(error));
 

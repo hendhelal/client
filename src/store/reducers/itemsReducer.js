@@ -41,10 +41,7 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.EDIT_ITEM_SUCCESS:
             let items = [...state.items];
-            let editedItemIndex = items.map((x, index) => {
-                if (x.id === action.item.id)
-                    return index;
-            })[0];
+            let editedItemIndex = items.findIndex(x=>x.id===action.id);
             items[editedItemIndex] = action.item;
             return {
                 ...state,

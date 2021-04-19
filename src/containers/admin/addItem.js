@@ -1,17 +1,6 @@
 import { Component } from 'react';
 import Form from '../../components/UI/Form/form';
- function Input(value,config,type,title,validRules,options=null,valid=false)
- {
-     this.value=value;
-     this.config={...config,value:this.value};
-     this.valid=this.value.length>0 ?true:false;
-     this.touched=false;
-     this.type=type;
-     this.title=title;
-     this.validRules=validRules;
-     this.options=options;
- }
-
+ import {inputChangeHandler,Input} from'./../../shared/formUtils/formUtils';
 class AddItem extends Component {
    
     state={
@@ -25,70 +14,9 @@ class AddItem extends Component {
         },
       formValid:false
     }
-    checkValidity=(value,rules)=>{
-        let isValid=true;
-        for (const key in rules) {
-            if (key==="length") {
-                isValid=value.length>rules[key] &&isValid;
-            }
-            if (key==="required") {
-                if(rules[key])
-                {
-                    isValid=rules[key] && isValid;
-                }
-               
-            }
-        }
-        return isValid;
-    }
-    inputChangeHandler=(event,id,rules)=>{
-
-         const value=event.target.value;
-        
-         let isValid=true;
-          if(rules)
-         {
-           isValid=this.checkValidity(value,rules);
-        }
-        let itemData={...this.state.itemData};
-        let elment={...itemData[id]} ;
-        
-        elment.value=value;
-        elment.config.value=value;
-        elment.valid=isValid;
-        elment.touched=true;
-        itemData[id]=elment;
-        let formValid=true;
-        for (const key in itemData) {
-         formValid=itemData[key].valid && formValid;
-        }
-        this.setState({itemData,formValid});
-
-    }
-    componentDidUpdate(oldProps,oldState)
-    {
-if (this.props.formData)
-{
-    if(this.state.itemData.name.value==="")
-    {
-        let itemData={...this.state.itemData};
-        console.log(itemData);
-        itemData.name.value=this.props.formData.name;
-       // itemData.name.config.value=this.props.formData.name;
-        itemData.description.value=this.props.formData.description;
-        //itemData.description.config.value=this.props.formData.description;
-        itemData.price.value=this.props.formData.price;
-        //itemData.price.config.value=this.props.formData.price;
-        itemData.endDate.value=this.props.formData.endDate;
-        //itemData.endDate.config.value=this.props.formData.endDate;
-        itemData.image.value=this.props.formData.image;
-        //itemData.image.config.value=this.props.formData.image;
-console.log(itemData);
-        this.setState({itemData:itemData});
-    }
-}
-    }
+  
   render() {
+this.inputChangeHandler=inputChangeHandler(this.setState.bind(this),this.state);
    
       let itemData={};
       let formData=[];

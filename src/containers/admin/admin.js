@@ -10,6 +10,7 @@ import AddItem from "./addItem";
 class Admin extends Component {
 
     state={
+        formVisible:false,
         btnText:"Add Item",
         cancelBtn:false,
         selectedItem:null
@@ -18,18 +19,22 @@ class Admin extends Component {
         this.props.init();
     }
     editBtnHandler=(item)=>{
-        this.setState({btnText:"Update Item",cancelBtn:true, selectedItem:item});
         
+        var date = new Date(item.endDate).toISOString().substr(0, 16)
+        let selectedItem={...item,image:"",endDate:date};
+        this.setState({btnText:"Update Item",cancelBtn:true, selectedItem:selectedItem});
+        this.setState({formVisible:true});
     }
     cancelBtnHandler=()=>{
-        this.setState({ btnText:"Add Item",cancelBtn:false});
+        this.setState({ btnText:"Add Item",cancelBtn:false,formVisible:false,selectedItem:null});
     }
-    clickBtnHandler=(item,id)=>{
+    clickBtnHandler=(item)=>{
         if(this.state.btnText.includes("Add"))
         {
             this.props.addItem(item);
         }
         else{
+            let id=this.state.selectedItem.id;
             this.props.editItem(id,item);
         }
     }
@@ -38,7 +43,9 @@ class Admin extends Component {
         if (this.props.items) {
             return (
                 <Fragment>
-                    <AddItem formData={this.state.selectedItem? this.state.selectedItem:null} click={this.clickBtnHandler} cancelHandler={this.cancelBtnHandler} cancelBtn={this.state.cancelBtn} btnText={this.state.btnText}/>
+                   
+                    { this.state.formVisible? <AddItem formData={this.state.selectedItem? this.state.selectedItem:null} click={this.clickBtnHandler} cancelHandler={this.cancelBtnHandler} cancelBtn={this.state.cancelBtn} btnText={this.state.btnText}/>
+                    :<button onClick={()=>this.setState({formVisible:true})}>AddUser</button> }
                   <ItemsTable items={this.props.items} deleteClick={this.props.deleteItem} editClick={this.editBtnHandler}/>
 
                 </Fragment>

@@ -14,7 +14,8 @@ const Form =(props)=>{
             {formElements}
             <div className={classes.BtnContainer}> 
              <Button type="Success" disabled={!props.formValid}>{props.btnText}</Button>
-             {props.cancelBtn? <Button type="Danger" click={props.cancelHandler} disabled={!props.formValid}>Cancel</Button>:null}
+             {props.cancelBtn? <Button type="Danger" click={props.cancelHandler} >Cancel</Button>:null}
+             {props.children}
              </div>
           
         </form>
