@@ -9,7 +9,7 @@ class AddItem extends Component {
             description:new Input(this.props.formData?this.props.formData.description :"",{placeholder:"",type:"text"},"input","Item Description",{length:10,required:true}),
             price:new Input(this.props.formData?this.props.formData.price :"",{placeholder:"",type:"number"},"input","Start Bid",{required:true}),
             endDate:new Input(this.props.formData?this.props.formData.endDate :"",{placeholder:"",type:"datetime-local"},"input","DeadLine",{required:true}),
-            image:new Input(this.props.formData?this.props.formData.image :"",{placeholder:"",type:"file"},"input","Image",{required:true}),
+            image:new Input(this.props.formData?this.props.formData.image :"",{placeholder:"",type:"file"},"image","Image",{required:true}),
 
         },
       formValid:false

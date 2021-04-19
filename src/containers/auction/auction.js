@@ -6,6 +6,8 @@ import withErrorHandler from './../withErrorHandler';
 import * as actions from './../../store/actions/index';
 import { connect } from "react-redux";
 import axios from './../../auction-axios';
+
+
 class Auction extends Component {
     constructor(props)
     {
@@ -16,11 +18,12 @@ class Auction extends Component {
         descSearch: '',
         priceSearch:'Filter By Price',
         pageItems:[],
+
     }
     componentDidMount(){
         this.setState({loading:false});
         this.props.auctionInit();
-   
+
 
     }
     handleInputChange(event, type) {

@@ -7,6 +7,7 @@ import Spinner from './../../components/UI/Spinner/Spinner'
 import classes from "./admin.module.css";
 import ItemsTable from "../../components/itemsTable/itemsTable";
 import AddItem from "./addItem";
+
 class Admin extends Component {
 
     state={
@@ -17,6 +18,7 @@ class Admin extends Component {
     }
     componentDidMount() {
         this.props.init();
+       
     }
     editBtnHandler=(item)=>{
         
@@ -31,7 +33,14 @@ class Admin extends Component {
     clickBtnHandler=(item)=>{
         if(this.state.btnText.includes("Add"))
         {
-            this.props.addItem(item);
+            const formData = new FormData();
+            formData.append('name', item.name);
+            formData.append('description', item.description);
+            formData.append('price', item.price);
+            formData.append('endDate', item.endDate);
+            formData.append('image', item.image);
+         
+            this.props.addItem(formData);
         }
         else{
             let id=this.state.selectedItem.id;

@@ -29,16 +29,19 @@ export const inputChangeHandler=(setState,state)=>{
 
     return(event,id,rules)=>{
         let value=event.target.value;
-        if(!value)
-        {
-            value=event;
-        }
-       
+           
         let isValid=true;
+        if(id==="image")
+        {
+            value=rules;
+        }else{
+
+        }
          if(rules)
         {
           isValid=checkValidity(value,rules);
        }
+
        let itemData={...state.itemData};
        let elment={...itemData[id]} ;
        

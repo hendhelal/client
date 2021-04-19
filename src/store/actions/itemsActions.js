@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../auction-axios";
+
 const AuctionInitSuccess = (items) => {
 
     return {
@@ -17,11 +18,11 @@ const AuctionInitFailed = (error) => {
 export const AuctionInit = () => {
 
     return dispatch => {
-        axios.get("items.json").then(resp => {
-            const ids = Object.keys(resp.data);
+        axios.get("/").then(resp => {
+           
             const data = Object.values(resp.data);
-            const items = ids.map((id, index) => {
-                return { id: id, ...data[index] }
+            const items = resp.data.items.map((i, index) => {
+                return { id: i._id, ...i }
             })
 
             dispatch(AuctionInitSuccess(items));
@@ -49,8 +50,8 @@ const GetItem_Failed = (error) => {
 }
 export const GetItem = (id) => {
     return dispatch => {
-        axios.get(`items/${id}.json`).then(resp => {
-            dispatch(GetItem_Success(resp.data));
+        axios.get(`${id}`).then(resp => {
+            dispatch(GetItem_Success(resp.data.item));
         }).catch(error => {
             dispatch(GetItem_Failed(error));
 
@@ -78,8 +79,8 @@ const AddItem_Failed = (error) => {
 }
 export const AddItem = (item) => {
     return dispatch => {
-        axios.post(`items.json`,item).then(resp => {
-            dispatch(AddItem_Success({id:resp.data.name, ...item}));
+        axios.post(`/`,item).then(resp => {
+            dispatch(AddItem_Success({id:resp.data.item._id, ...resp.data.item}));
         }).catch(error => {
             dispatch(AddItem_Failed(error));
 
@@ -103,7 +104,7 @@ const EditItem_Failed = (error) => {
 }
 export const EditItem = (id,item) => {
     return dispatch => {
-        axios.patch(`items/${id}.json`,item).then(resp => {
+        axios.patch(`${id}`,item).then(resp => {
             item={...item,id:id};
             dispatch(EditItem_Success(item,id));
         }).catch(error => {
@@ -128,7 +129,7 @@ const DeleteItem_Failed = (error) => {
 }
 export const DeleteItem = (id) => {
     return dispatch => {
-        axios.delete(`items/${id}.json`).then(resp => {
+        axios.delete(`${id}`).then(resp => {
             dispatch(DeleteItem_Success(id));
         }).catch(error => {
             dispatch(DeleteItem_Failed(error));
@@ -153,7 +154,7 @@ const AddBidSuccess=(item)=>{
 export const AddBid=(item,id)=>{
 
     return dispatch=>{
-        axios.put(`items/${id}.json`,item).then(resp=>{
+        axios.patch(`addBid/${id}`,item.bids).then(resp=>{
             dispatch(AddBidSuccess(item));
         }).catch(error=>{
             dispatch(AddBidFailed(error));

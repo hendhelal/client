@@ -1,33 +1,40 @@
 import React from "react";
 import classes from "./FormInput.module.css";
-
-const formInput=(props)=>{
+import ImageUpload from './../imageUpload/imageUpload'
+const formInput = (props) => {
 
     let inputElement;
-    const inputConfig=props.config.config;
-    let classNames=[classes.Input,classes.InputElement];
-    if(!props.config.valid && props.config.touched)
-    {
+    const inputConfig = props.config.config;
+    let classNames = [classes.Input, classes.InputElement];
+    if (!props.config.valid && props.config.touched) {
         classNames.push(classes.Invalid);
     }
-    classNames=classNames.join(" ");
+    classNames = classNames.join(" ");
     switch (props.config.type) {
         case "input":
-            inputElement=<input className={classNames} value={props.value} {...inputConfig} onChange={(event)=>props.inputChange(event,props.id,props.config.validRules)}/>
+            inputElement = <input className={classNames} value={props.value} {...inputConfig} onChange={(event) => props.inputChange(event, props.id, props.config.validRules)} />
             break;
-            case "textarea":
-            inputElement=<textarea className={classNames} {...inputConfig} value={props.value} onChange={(event)=>props.inputChange(event,props.id,props.config.validRules)}/>
+        case "textarea":
+            inputElement = <textarea className={classNames} {...inputConfig} value={props.value} onChange={(event) => props.inputChange(event, props.id, props.config.validRules)} />
             break;
-            case "select":
-            inputElement=(<select className={classNames} onChange={(event)=>props.inputChange(event,props.id)}>
-                {props.config.options.map(o=> <option key={o} value={o}>{o}</option>)}
+        case "select":
+            inputElement = (<select className={classNames} onChange={(event) => props.inputChange(event, props.id)}>
+                {props.config.options.map(o => <option key={o} value={o}>{o}</option>)}
             </select>)
-            break;  
+            break;
+        case "image":
+            inputElement = <ImageUpload
+                id="image"
+                rules={props.config.validRules}
+                onInput={props.inputChange}
+                errorText="Please provide an image."
+            />
+            break;
         default:
-            inputElement=<input className={classNames} {...inputConfig} onChange={(event)=>props.inputChange(event,props.id,props.config.validRules)}/>
+            inputElement = <input className={classNames} {...inputConfig} onChange={(event) => props.inputChange(event, props.id, props.config.validRules)} />
             break;
     }
-    return(
+    return (
         <div>
             <label className={classes.Label}>{props.title}</label>
             {inputElement}
