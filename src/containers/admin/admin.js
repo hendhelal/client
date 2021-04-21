@@ -7,7 +7,6 @@ import Spinner from './../../components/UI/Spinner/Spinner'
 import classes from "./admin.module.css";
 import ItemsTable from "../../components/itemsTable/itemsTable";
 import AddEditItem from "./add-edit-Item";
-import Table from "../../components/itemsTable/Table";
 import Pagination from "../../components/UI/Pagination/pagination";
 
 class Admin extends Component {

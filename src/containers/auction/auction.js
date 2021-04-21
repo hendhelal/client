@@ -9,10 +9,7 @@ import axios from './../../auction-axios';
 
 
 class Auction extends Component {
-    constructor(props)
-    {
-        super(props);
-    }
+
     state = {
         nameSearch: '',
         descSearch: '',

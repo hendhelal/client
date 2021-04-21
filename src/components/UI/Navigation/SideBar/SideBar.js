@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import classes from './SideBar.module.css';
 import Logo from '../Logo/Logo'
 import NavigationItems from '../NavigationItems/NavigationItems';

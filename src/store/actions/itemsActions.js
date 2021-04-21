@@ -19,8 +19,6 @@ export const AuctionInit = () => {
 
     return dispatch => {
         axios.get("/").then(resp => {
-           
-            const data = Object.values(resp.data);
             const items = resp.data.items.map((i, index) => {
                 return { id: i._id, ...i }
             })

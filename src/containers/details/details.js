@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 import axios from "../../auction-axios";
 import withErrorHandler from "../withErrorHandler";
@@ -57,7 +57,7 @@ class Details extends Component {
             return (
                 <div className={classes.details}>
                     <div className={classes.left}>
-                        <img src={`http://localhost:5000/${item.image}`} />
+                        <img src={`http://localhost:5000/${item.image}`} alt={item.name}/>
                     </div>
                     <div className={classes.right}>
                         <h1>{item.name}</h1>

@@ -61,13 +61,13 @@ class AddItem extends Component {
     }
   }
   static getDerivedStateFromProps(props, state) {
-
-
-    if (props.formData != state.propsFieldsData) {
+    if (props.formData !== state.propsFieldsData) {
+     
       if (props.formData.name.length > 0) {
 
         let oldFields = { ...state.itemData }
         let newFields;
+         //alow price edit only of no bids made yet
         if (props.formData.bids.length === 0) {
           newFields = {
             name: { ...oldFields.name },
@@ -77,10 +77,20 @@ class AddItem extends Component {
           };
 
           for (let key in newFields) {
-            newFields[key].valid = true;
-            newFields[key].value = props.formData[key];
-            newFields[key].config = { ...oldFields[key].config }
+            if(!newFields[key].config)
+            {
+              newFields[key]={...state.orgFields[key]};
+              newFields[key].config={...state.orgFields[key].config}
+              
+            }
+            else{
+              newFields[key].valid = true;
+              newFields[key].value = props.formData[key];
+              newFields[key].config = { ...oldFields[key].config }
+             
+            }
             newFields[key].config.value = props.formData[key];
+            newFields[key].value = props.formData[key];
 
           }
 
@@ -104,21 +114,15 @@ class AddItem extends Component {
         return newstate;
 
       }
-      else {
-        return state
-      }
     }
-    else{
-      return state;
-    }
-    
+    return state;
   }
 
   render() {
     this.inputChangeHandler = inputChangeHandler(this.setState.bind(this), this.state);
 
-    let itemData = {};
-    let formData = [];
+    let itemData = {};// for values
+    let formData = [];// for rendering
     for (let data in this.state.itemData) {
       itemData[data] = this.state.itemData[data].value;
       formData.push({ config: this.state.itemData[data], title: this.state.itemData[data].title, id: data })
