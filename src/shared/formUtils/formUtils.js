@@ -2,7 +2,14 @@ export function Input(value,config,type,title,validRules,options=null,valid=fals
  {
      this.value=value;
      this.config={...config,value:this.value};
-     this.valid=this.value.length>0 ?true:false;
+     if(typeof(value)==="number")
+     {
+        this.valid=this.value>0 ?true:false;
+     }
+     else{
+        this.valid=this.value.length>0 ?true:false;
+     }
+    
      this.touched=false;
      this.type=type;
      this.title=title;

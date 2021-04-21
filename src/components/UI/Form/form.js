@@ -10,7 +10,7 @@ const Form =(props)=>{
     });
  
     return(
-        <form onSubmit={props.click}>
+        <form onSubmit={props.click} className={`${classes.form} ${props.visible?classes.visible:classes.hidden}`}>
             {formElements}
             <div className={classes.BtnContainer}> 
              <Button type="Success" disabled={!props.formValid}>{props.btnText}</Button>

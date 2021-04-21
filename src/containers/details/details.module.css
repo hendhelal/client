@@ -1,10 +1,7 @@
 .details{
     display: flex;
-   
-    height: 100%;
-    width: 100%;
-    position: fixed;
     padding: 50px;
+    font-size: 24px;
 }
 .left{
     display: flex;
@@ -14,19 +11,26 @@
 }
 .left img{
 width: 600px;
+margin: auto;
 }
 .right{
     display: flex;
     flex-direction: column;
     height: 50%;
     justify-content: space-evenly;
+    margin: auto;
+}
+.right h1{
+    color:  #40a4c8;
 }
 .details form{
     padding: 20px;
     border: 1px solid #80808073;
-    margin-top: 40px;
     border-radius: 5px;
     box-shadow: 0px 0px 12px 0px #b8b7b7;
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
 }
 .details form button{
     background-color: #40a4c8;
@@ -35,6 +39,7 @@ width: 600px;
     border-radius: 5px;
     margin-left: 20px;
     cursor: pointer;
+    margin-top: 10px;
 }
 .details form p{
     margin: 0;
@@ -48,3 +53,16 @@ width: 600px;
     margin-left: 20px;
     color: #40a4c8;
 }
+
+@media screen and (max-width: 900px) {
+    .left img{
+        width: 300px;
+        }
+        .details{
+        flex-direction: column;
+        font-size: 20px;
+        }
+        .details form{
+            width: initial;
+        }
+  }

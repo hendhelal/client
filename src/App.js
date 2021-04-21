@@ -40,26 +40,10 @@ function App(props) {
       if (x) {
         setIsLoggedIn(true);
       }
-
-
     }
     )
   });
-  let routes;
-  if (isLoggedIn) {
-    routes = <Switch>
-      <PrivateRoute path="/items/:id" component={Details} />
-      <PrivateRoute exact path="/" component={Auction} />
-      <PrivateRoute path="/admin" roles={[Role.Admin]} component={Admin} />
-    </Switch>
 
-  }
-  else {
-    routes = <Switch>
-      <Route path="/login" component={Login} />
-      <Redirect to="/login" />
-    </Switch>
-  }
   return (
     <div className="App">
       <AuthContext.Provider value={{ isLoggedIn, login, logout, isAdmin }}>
@@ -70,7 +54,7 @@ function App(props) {
               <PrivateRoute exact path="/" component={Auction} />
               <PrivateRoute path="/admin" roles={[Role.Admin]} component={Admin} />
               {!isLoggedIn ? <Route path="/login" component={Login} /> : <Redirect to="/" exact />}
-              <Route path='*' exact  component={NotFound} />
+              <Route path='*' exact component={NotFound} />
             </Switch>
 
 

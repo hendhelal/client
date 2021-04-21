@@ -28,29 +28,30 @@ class Auction extends Component {
     }
     handleInputChange(event, type) {
         const value = event.target.value;
+        let oldItems=this.state.items?this.state.items:this.props.items;
         let newItems = [];
         if (type === "name") {
-            newItems = this.state.items.filter(item => item.name.toLocaleLowerCase().includes(value));
+            newItems = oldItems.filter(item => item.name.toLocaleLowerCase().includes(value));
             this.setState({ nameSearch: value });
         }
         else  if (type === "desc") {
-            newItems = this.state.items.filter(item => item.description.toLocaleLowerCase().includes(value));
+            newItems = oldItems.filter(item => item.description.toLocaleLowerCase().includes(value));
             this.setState({ descSearch: value });
         }
         else{
             if(value==="high")
             {
-                newItems = this.state.items.sort((a, b) => b.price - a.price);
+                newItems = oldItems.sort((a, b) => b.price - a.price);
             }
             else{
-                newItems = this.state.items.sort((a, b) => a.price - b.price);
+                newItems = oldItems.sort((a, b) => a.price - b.price);
             }
            
             this.setState({ priceSerach: value });
             this.setState({ pageItems: newItems.slice(0,10) });
         }
         if (value === '') {
-            newItems = this.state.orgItems;
+            newItems = this.props.orgItems;
         }
 
         this.setState({ items: newItems });
@@ -73,8 +74,8 @@ class Auction extends Component {
 
                     </select>
                 </div>
-                <AuctionItems items={this.state.pageItems} />
-                <Pagination items={this.props.items} onChangePage={this.onChangePage} />
+               {this.state.pageItems.length>0 ?<AuctionItems items={this.state.pageItems} />: <h1>NO ITEMS AVAILABLE.</h1>} 
+                <Pagination items={this.state.items?this.state.items:this.props.items} onChangePage={this.onChangePage} />
             </div>
         )
 

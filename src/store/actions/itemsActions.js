@@ -105,7 +105,7 @@ const EditItem_Failed = (error) => {
 export const EditItem = (id,item) => {
     return dispatch => {
         axios.patch(`${id}`,item).then(resp => {
-            item={...item,id:id};
+            item={id:resp.data.item._id, ...resp.data.item};
             dispatch(EditItem_Success(item,id));
         }).catch(error => {
             dispatch(EditItem_Failed(error));

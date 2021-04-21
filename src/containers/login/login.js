@@ -30,8 +30,8 @@ class Login extends Component {
           (props) => {
             return <Form click={(event) => { event.preventDefault(); props.login(this.state.itemData.name.value, this.state.itemData.password.value); }}
               formValid={this.state.formValid} inputChange={this.inputChangeHandler}
-              btnText="LOGIN" fieldsData={formData}>
-
+              btnText="LOGIN" fieldsData={formData}
+              visible>
             </Form>
           }
 

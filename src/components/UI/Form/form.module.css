@@ -1,11 +1,46 @@
-Form{
-    margin: 10px;
+.form{
+    
     box-shadow: 3px -3px 10px #0000005c;
     border: 1px solid #b9b6b6;
     padding: 20px;
-    width: 300px;
-}
+    width: 400px;
+    margin: 30px auto;
+    display: none
+    
+    }
 .BtnContainer{
     display: flex;
     justify-content: center;
+}
+.visible{
+    display: block;
+    animation: fadeIn 0.5s;
+
+}
+.hidden{
+    display: none;
+    animation: fadeOut 0.5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0)
+   }
+
+   100% {
+        opacity: 1;
+        transform: scale(1)
+   }
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1)
+   }
+
+   100% {
+        opacity: 0;
+        transform: scale(0)
+   }
 }

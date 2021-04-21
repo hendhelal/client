@@ -1,4 +1,4 @@
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import withErrorHandler from './../withErrorHandler';
 import * as actions from './../../store/actions/index';
 import { connect } from "react-redux";
@@ -6,15 +6,23 @@ import axios from './../../auction-axios';
 import Spinner from './../../components/UI/Spinner/Spinner'
 import classes from "./admin.module.css";
 import ItemsTable from "../../components/itemsTable/itemsTable";
-import AddItem from "./addItem";
+import AddEditItem from "./add-edit-Item";
+import Table from "../../components/itemsTable/Table";
+import Pagination from "../../components/UI/Pagination/pagination";
 
 class Admin extends Component {
 
     state={
         formVisible:false,
         btnText:"Add Item",
-        cancelBtn:false,
-        selectedItem:null
+        selectedItem:{name:"",description:"",price:"",endDate:"",image:"",bids:[]}
+        ,formValid:false,
+        items:null,
+        pageItems:[]
+    }
+    onChangePage=(pageItems)=> {
+        // update state with new page of items
+        this.setState({ pageItems: pageItems });
     }
     componentDidMount() {
         this.props.init();
@@ -24,11 +32,12 @@ class Admin extends Component {
         
         var date = new Date(item.endDate).toISOString().substr(0, 16)
         let selectedItem={...item,image:"",endDate:date};
-        this.setState({btnText:"Update Item",cancelBtn:true, selectedItem:selectedItem});
-        this.setState({formVisible:true});
+        this.setState({btnText:"Update Item", selectedItem:selectedItem});
+        this.setState({formVisible:true,formValid:false});
     }
-    cancelBtnHandler=()=>{
-        this.setState({ btnText:"Add Item",cancelBtn:false,formVisible:false,selectedItem:null});
+    cancelBtnHandler=(event)=>{
+        event.preventDefault();
+        this.setState({ btnText:"Add Item",formVisible:false,selectedItem:{name:"",description:"",price:"",endDate:"",image:"",bids:[]}});
     }
     clickBtnHandler=(item)=>{
         if(this.state.btnText.includes("Add"))
@@ -43,21 +52,24 @@ class Admin extends Component {
             this.props.addItem(formData);
         }
         else{
-            let id=this.state.selectedItem.id;
-            this.props.editItem(id,item);
+            const formData ={name:item.name, description:item.description,endDate:item.endDate,price:item.price?+item.price:+this.state.selectedItem.price}
+               let id=this.state.selectedItem.id;
+
+            this.props.editItem(id,formData);
         }
     }
 
     render() {
         if (this.props.items) {
             return (
-                <Fragment>
-                   
-                    { this.state.formVisible? <AddItem formData={this.state.selectedItem? this.state.selectedItem:null} click={this.clickBtnHandler} cancelHandler={this.cancelBtnHandler} cancelBtn={this.state.cancelBtn} btnText={this.state.btnText}/>
-                    :<button onClick={()=>this.setState({formVisible:true})}>AddUser</button> }
-                  <ItemsTable items={this.props.items} deleteClick={this.props.deleteItem} editClick={this.editBtnHandler}/>
-
-                </Fragment>
+                <div className={classes.adminPage}>
+                   <h1>Auction Items</h1>
+                     <AddEditItem visible={this.state.formVisible} formData={this.state.selectedItem? this.state.selectedItem:null} 
+                     click={this.clickBtnHandler} cancelHandler={this.cancelBtnHandler} cancelBtn={true} btnText={this.state.btnText} formValid={this.state.formValid}/>
+                   {!this.state.formVisible? <button className={`${classes.AddItem} btn`} onClick={()=>this.setState({formVisible:true})}>Add Item</button>:null} 
+                  <ItemsTable items={this.state.pageItems} deleteClick={this.props.deleteItem} editClick={this.editBtnHandler} className={classes.tableList}/>
+                {this.props.items.length>0  ?<Pagination items={this.props.items} onChangePage={this.onChangePage} />:null} 
+                </div>
             )
         }
         else {

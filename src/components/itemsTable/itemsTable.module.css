@@ -7,3 +7,12 @@ th ,td{
     text-align: left;
     vertical-align: middle !important;
 }
+.noItems{
+    font-size: 20px;
+    font-weight: 500;
+}
+thead th {
+    text-align: left;
+    border-bottom: 2px solid black;
+  }
+  

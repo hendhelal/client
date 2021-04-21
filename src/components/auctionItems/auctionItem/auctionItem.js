@@ -6,7 +6,7 @@ function AuctionItem(props) {
         <img src={`http://localhost:5000/${item.image}`} />
         <span>{item.name}</span>
         <span>{item.description}</span>
-        <span>{item.price} $</span>
+        <span>{item.bids.length>0 ?item.bids.slice(-1):item.price} $</span>
         <Link to={`items/${item.id}`}>Bid Now</Link>
     </li>)
 }

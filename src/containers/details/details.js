@@ -14,7 +14,6 @@ class Details extends Component {
     handleFormSubmit = (e) => {
         e.preventDefault();
         if (typeof (+this.state.startBid) === "number") {
-            if (this.props.item.bids.slice(-1) < this.state.startBid) {
                 const newItem = { ...this.props.item };
                 let bids;
                 if (!newItem.bids) {
@@ -27,8 +26,6 @@ class Details extends Component {
                 bids.push(this.state.startBid);
                 newItem.bids = bids;
                 this.props.addBid(newItem, this.props.match.params.id);
-            }
-
         }
 
     }
@@ -44,9 +41,9 @@ class Details extends Component {
         else {
             let spans;
             let item = this.props.item;
-            if (item.bids) {
+            if (item.bids.length>0) {
                 spans = (<div className={classes.bidsStats}>
-                    <span>Current Bid: </span><span className="font-weight-bold">{item.bids.slice(-1)}$</span>
+                    <span>Current Bid: </span><span className="font-weight-bold">{+item.bids.slice(-1)}$</span>
                     <span className="font-weight-bold">[{item.bids.length} bids]</span>
                 </div>)
 
@@ -60,7 +57,7 @@ class Details extends Component {
             return (
                 <div className={classes.details}>
                     <div className={classes.left}>
-                        <img src={`/imgs/${item.image}`} />
+                        <img src={`http://localhost:5000/${item.image}`} />
                     </div>
                     <div className={classes.right}>
                         <h1>{item.name}</h1>
@@ -74,9 +71,9 @@ class Details extends Component {
                         <CountDown endDate={item.endDate} />
                         <form onSubmit={this.handleFormSubmit}>
                             {spans}
-                            <input className="form-control" type="number" placeholder={item.bids ? +item.bids.slice(-1) + 1 : item.price} min={item.bids ? +item.bids.slice(-1) + 1 : item.price} value={this.state.startBid} onChange={(e) => this.setState({ startBid: e.target.value })} />
+                            <input className="form-control" type="number" placeholder={item.bids.length>0 ? +item.bids.slice(-1) + 1 : item.price} min={item.bids.length>0 ? +item.bids.slice(-1) + 1 : item.price} value={this.state.startBid} onChange={(e) => this.setState({ startBid: e.target.value })} />
                             <button className="btn" >Submit Bid</button>
-                            <p> Enter bid of {item.bids ? +item.bids.slice(-1) + 1 : item.price + 1} $ or highter</p>
+                            <p> Enter bid of {item.bids.length>0 ? +item.bids.slice(-1) + 1 : item.price + 1} $ or highter</p>
                         </form>
                     </div>
                 </div>

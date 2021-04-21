@@ -22,6 +22,9 @@
 .Danger {
     color: #944317;
 }
+.Primary{
+    color:cornflowerblue;
+}
 .Button:disabled{
     color: gray;
     cursor:not-allowed;
