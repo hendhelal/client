@@ -28,11 +28,15 @@ class Login extends Component {
       <AuthContext.Consumer>
         {
           (props) => {
-            return <Form click={(event) => { event.preventDefault(); props.login(this.state.itemData.name.value, this.state.itemData.password.value); }}
+             return (
+             <div>
+              <Form click={(event) => { event.preventDefault(); props.login(this.state.itemData.name.value, this.state.itemData.password.value); }}
               formValid={this.state.formValid} inputChange={this.inputChangeHandler}
               btnText="LOGIN" fieldsData={formData}
               visible>
             </Form>
+            {props.error!==''?<p style={{color:'red', fontSize:"20px"}}>{props.error}</p>:null}
+            </div> )
           }
 
         }

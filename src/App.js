@@ -15,6 +15,8 @@ import { PrivateRoute } from './auth/privateRoute/privateRoute';
 import NotFound from './components/notFound/notFound'
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const [currentUser, setCurrentUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const login = useCallback((name, password) => {
@@ -24,7 +26,7 @@ function App(props) {
           setIsLoggedIn(true);
         },
         error => {
-
+        setErrorMsg(error);
         }
       );
 
@@ -46,7 +48,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <AuthContext.Provider value={{ isLoggedIn, login, logout, isAdmin }}>
+      <AuthContext.Provider value={{ isLoggedIn, login, logout, isAdmin ,error:errorMsg}}>
         <BrowserRouter>
           <Layout>
             <Switch>
